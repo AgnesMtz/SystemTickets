@@ -1,0 +1,12 @@
+Variables necesarias para el .env del backend:
+HOST=
+DATABASE=
+USER=
+PASSWORD=
+FRONTEND_URL=
+JWT_SECRET= 
+E_MAIL=gaytansgtickets@gmail.com
+EPASSWORD=mrgxmqpdehzftsao
+
+Variables necesarias para el .env del frontend:
+VITE_BACKEND_URL = 
