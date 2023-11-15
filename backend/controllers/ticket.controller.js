@@ -221,6 +221,29 @@ export const mostrarTodosTickets = async (req, res) => {
     }
 };
 
+
+export const mostrarTicketsPorEncargado = async (req, res) => {
+    try {
+        const workerId = req.params.workerId;
+        const connection = await conectarDB();
+
+        const workerQuery = await connection.query('SELECT id FROM worker WHERE userId = ?', [workerId]);
+        const chargerId = workerQuery;
+
+        const misTickets =
+            await connection.query(`SELECT ticket.*
+            FROM ticket
+            INNER JOIN ticketworker ON ticketworker.ticket = ticket.id
+            INNER JOIN client ON ticket.clientId = client.id
+            WHERE ticketworker.inCharge = ${chargerId[0].id}`);
+
+        const data = [misTickets];
+        res.json(data);
+    } catch (error) {
+        return res.status(400).json({ msg: error.message });
+    }
+};
+
 export const mostrarMisTickets = async (req, res) => {
     try {
         const workerId = req.params.workerId;
@@ -238,6 +261,10 @@ export const mostrarMisTickets = async (req, res) => {
         return res.status(400).json({ msg: error.message });
     }
 };
+
+
+
+
 
 export const mostrarMisTicketsCliente = async (req, res) => {
     try {

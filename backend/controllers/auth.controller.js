@@ -54,10 +54,11 @@ export const login = async (req, res) => {
                         id: userRaw[0].id,
                         email: userRaw[0].email,
                     },
-                    "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
+                    process.env.JWT_SECRET
+                    // "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
                 );
 
-                res.json({ message: "Bienvenido!", token: jwtToken, action: "success", rol: rol });
+                res.json({ message: "Bienvenido!", token: jwtToken, action: "success", rol: rol, id: userRaw[0].id });
             } else {
                 console.log("Passwords no coinciden: " + email);
                 res.json({ message: "Usuario o contraseña incorrectos", action: "error" });

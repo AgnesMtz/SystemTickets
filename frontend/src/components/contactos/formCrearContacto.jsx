@@ -18,11 +18,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 
-const FormCrearContacto = ({id, handleCreateContacto}) => {
+const FormCrearContacto = ({id, handleCreateContacto, cliente}) => {
 
     const [mensaje, setMensaje] = useState('');
     const [visible, setVisible] = useState(false);
     const [isError, setIsError] = useState(false);
+    
+    console.log(cliente)
 
     const handleVisible = (visibility) => {
         setVisible(visibility);
@@ -45,7 +47,7 @@ const FormCrearContacto = ({id, handleCreateContacto}) => {
 
         const { data } = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/cliente/crear-contacto`,
-            {name, firstLastName, secondLastName, birthDate, id }
+            {name, firstLastName, secondLastName, birthDate, id, clientId: cliente.id}
             );        
   
           console.log(data)

@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import FormCrearContacto from "./formCrearContacto";
  
-export default function ModalCrearContacto({createContacto, handleCreateContacto, id}) {
+export default function ModalCrearContacto({createContacto, handleCreateContacto, id, cliente}) {
  
   return (
     <Fragment>
@@ -25,7 +25,7 @@ export default function ModalCrearContacto({createContacto, handleCreateContacto
         >
           Agregar Contacto
         </DialogHeader>
-        <FormCrearContacto id={id} handleCreateContacto={handleCreateContacto}/>
+        <FormCrearContacto id={id} handleCreateContacto={handleCreateContacto} cliente={cliente} />
       </Dialog>
     </Fragment>
   );

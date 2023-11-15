@@ -34,8 +34,12 @@ import {
   }
 
     const handleSubmit = async (values, {resetForm}) => {
-      console.log(values)
-      const {companyName, email, priority} = values        
+
+
+    const companyName = values.companyName ? values.companyName : cliente.companyName
+    const email = values.email ? values.email : cliente.email
+    const priority = values.priority ? values.priority : cliente.priority
+
 
       if([companyName, email, priority].includes('')){
         setAlerta({
@@ -45,11 +49,16 @@ import {
           return
       }
 
-      if(encargado === 0){
+      if(encargado === 0 || encargado === '' || encargado === null){
+        setAlerta({
+          msg: 'El encaragado no puede estar vacio.',
+          error: true
+        })
         return
       }
+      var re = /\S+@\S+\.\S+/;
+      if (!re.test(email)) {
 
-      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         setAlerta({
           msg: 'El correo electrónico es invalido.',
           error: true
@@ -60,28 +69,29 @@ import {
       setAlerta({})
       
       try {          
-          // const {data} = await axios.post(
-          //   //Declarar la variable VITE_BACKEND_URL en el .env del front de acuerdo a donde se ejecute la API
-          //   `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/registrar-usuario/`,
-          //   {name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone}
-          // );  
+          const {data} = await axios.put(
+              `${import.meta.env.VITE_BACKEND_URL}/api/cliente/editar-informacion-cliente`,
+              {companyName, email, priority, encargado, clienteId: cliente.id}
+              );        
+              setEncargado(encargado)
+          setEncargado(data[0])
 
-          // console.log(data)
-        
-          setAlerta({
-            msg: data.msg,
-            error: false
-          });           
+          cliente.name = data[0].encargadoInfo[0].name
+          cliente.firstLastName = data[0].encargadoInfo[0].firstLastName
+          cliente.secondLastName = data[0].encargadoInfo[0].secondLastName
           
-          resetForm()
+          setIsEditing(false)
+          setTimeout(()=>{
+              resetForm()
+          },2000)
 
         } catch (error) {
           console.log(error)
-          const {data} = error.response                        
-          setAlerta({
-            msg: data.msg,
-            error: true
-          })
+          // const {data} = error.response                        
+          // setAlerta({
+          //   msg: data.msg,
+          //   error: true
+          // })
         }
     }
 

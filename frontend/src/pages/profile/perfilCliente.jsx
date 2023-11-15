@@ -48,7 +48,8 @@ import {
     const [verSucursales, setVerSucursales] = useState(false)
     const [verContactos, setVerContactos] = useState(false)
     const params = useParams();
-    
+    const [ticketsActivos, setTicketsActivos] = useState([])
+
     //Entra solo una vez para comprobar que el usuario exista
     useEffect(() => {
       const buscarCliente = async () => {
@@ -61,12 +62,32 @@ import {
             setEncargados(data[1])    
             setContactos(data[2])   
             setSucursales(data[3])   
+            ticketsEnProceso([data[0][0].id])
+
           } catch (error) {
             console.log(error);
           }
         };
         buscarCliente();
+
     }, []);  
+
+    const ticketsEnProceso = async (id) => {
+      console.log(client.id)
+      try {
+          const {data} = 
+          await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/cliente/tickets-en-proceso/${id}`
+            
+            );
+            setTicketsActivos(data)
+
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+
 
     const handleCreateSucursal = () =>{
       setCreateSucursal(!createSucursal)
@@ -89,7 +110,7 @@ import {
         { createSucursal 
           ? <ModalCrearSucursal createSucursal={createSucursal} handleCreateSucursal={handleCreateSucursal} id={params.id} contactos={contactos}/> 
           : createContacto 
-          && <ModalCrearContacto createContacto={createContacto} handleCreateContacto={handleCreateContacto} id={params.id}/>
+          && <ModalCrearContacto cliente={client} createContacto={createContacto} handleCreateContacto={handleCreateContacto} id={params.id}/>
           }        
         <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
           <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
@@ -206,11 +227,36 @@ import {
                 <FormEditarCliente cliente={client} isEditing={isEditing} setIsEditing={setIsEditing} encargados={encargados}/>
               </Card>
               
-              <div>
-                <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Tickets Activos
-                </Typography>
-              </div>
+                <div>
+                  <Typography variant="h6" color="blue-gray" className="mb-3">
+                    Tickets Activos
+                  </Typography>
+                  <Card className="mt-4 flex min-w-[15rem] flex-col">
+                  <CardBody className="m-1 flex flex-col gap-2 p-1">
+                   {ticketsActivos.map((ticket) => (
+                      <div key={ticket.id} className="flex flex-row gap-2">
+                        <div className="flex flex-col gap-1">
+                          <Typography variant="h6" color="blue-gray">
+                            {ticket.petition}
+                          </Typography>
+                          <Typography variant="body1" color="blue-gray">
+                            {ticket.activitie}
+                          </Typography>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <Typography variant="body1" color="blue-gray">
+                            {/* {ticket.state} */}
+                          </Typography>
+                          <Typography variant="body1" color="blue-gray">
+                            {/* Prioridad: {ticket.priority} */}
+                          </Typography>
+                        </div>
+                      </div>
+                    ))}
+                  </CardBody>
+              </Card>
+                  
+                </div>
             </div>
           </CardBody>
         </Card>

@@ -26,7 +26,8 @@ import {
     cambiarEstado,
     subirComentarios,
     cambiarEstadoAprobado,
-    cambiarEstadoCancelado
+    cambiarEstadoCancelado,
+    mostrarTicketsPorEncargado
 } from "../controllers/ticket.controller.js"
 
 import {
@@ -49,6 +50,7 @@ router.put('/borrar-pauta/:pautaId', borrarPauta)
 router.get('/mostrar-tickets/', mostrarTodosTickets)
 router.get('/mostrar-tickets/:workerId', mostrarMisTickets)
 router.get('/mostrar-ticketsCliente/:clientId', mostrarMisTicketsCliente)
+router.get('/mostrar-tickets-encargado/:workerId', mostrarTicketsPorEncargado)
 router.get('/mostrar-ticket/:ticketId', mostrarTicket)
 router.get('/prueba-ticket/', ticketPrueba)
 router.put('/subir-ticket/:ticketId', upload.single('ticket') , subirTicket)

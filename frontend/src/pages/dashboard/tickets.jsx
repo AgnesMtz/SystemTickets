@@ -17,15 +17,30 @@ export function Tickets() {
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
   const rol = useContext(MyContext);
+  const id = useContext(MyContext);
 
   useEffect(() => {
     const getTickets = async () => {
       try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
-        );
-        setTickets(data[0]);
-        console.log(data);
+
+        if(rol.rol === "3"){
+          // SI EL ROL ES UN Operador Creativo TRAE LOS TICKETS ASIGNADOS A ESE OPERADOR
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets-encargado/${id.id}`
+            // `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
+
+          );
+          setTickets(data[0]);
+          
+
+        }else{
+          // SI EL ROL ES DIFERENTE DE 3 TRAE TODOS LOS TICKETS 
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
+          );
+          setTickets(data[0]);
+          
+        }
       } catch (error) {
         console.log(error);
       }
