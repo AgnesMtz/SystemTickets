@@ -1,6 +1,7 @@
 import express from "express";
 import {
     registrarUsuario,
+    actualizarUsuario,
     obtenerTrabajadores,
     obtenerUsuarios,
     registrarCliente,
@@ -15,6 +16,9 @@ import {
 const router = express.Router()
 
 router.post('/registrar-usuario/', registrarUsuario)
+//
+router.post('/actualizar-usuario/', actualizarUsuario)
+//
 router.get('/obtener-trabajadores/', obtenerTrabajadores)
 router.get('/obtener-usuarios/', obtenerUsuarios)
 router.get('/registrar-cliente/', mostrarWorkers)

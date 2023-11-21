@@ -20,7 +20,7 @@ const websiteViewsChart = {
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["L", "M", "M", "J", "V", "S", "D"],
     },
   },
 };
@@ -78,7 +78,7 @@ export const statisticsChartsData = [
     color: "blue",
     title: "Tickets activos",
     description: "Cantidad de tickets activos por empresa",
-    // footer: "campaign sent 2 days ago",
+     footer: "campaign sent 2 days ago",
     chart: websiteViewsChart,
   },
   {

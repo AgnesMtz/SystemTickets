@@ -23,48 +23,70 @@ export const login = async (req, res) => {
 
         const connection = await conectarDB();
 
-        const userRaw = await connection.query(`SELECT * FROM user WHERE email = '${email}'`);
+        // Realizar un JOIN para obtener la información de user y worker
+        const userRaw = await connection.query(`
+            SELECT user.*, worker.active AS workerActive
+            FROM user
+            LEFT JOIN worker ON user.id = worker.userId
+            WHERE user.email = '${email}' AND worker.active = 1
+        `);
+
 
         if (userRaw.length > 0) {
             const storedHashedPassword = userRaw[0].password;
 
-            const passwordsMatch = bcrypt.compareSync(password, storedHashedPassword);
+            const isActive = userRaw[0].workerActive === 1;
 
-            if (passwordsMatch) {
+            console.log("Estado del controlador :",isActive);
+            if (isActive) {
+                const storedHashedPassword = userRaw[0].password;
+                const passwordsMatch = bcrypt.compareSync(password, storedHashedPassword);
 
-                let typeUser = await connection.query(`SELECT COUNT(id) FROM client WHERE userId = ${userRaw[0].id}`);
-                let rol = '';
-                // console.log(typeUser[0]['COUNT(id)']);
+                if (passwordsMatch) {
 
-                if(typeUser[0]['COUNT(id)'] > 0){
-                    console.log("Es un cliente");
-                    rol = '0';
+                    let typeUser = await connection.query(`SELECT COUNT(id) FROM client WHERE userId = ${userRaw[0].id}`);
+                    let rol = '';
+                    // console.log(typeUser[0]['COUNT(id)']);
+
+                    if (typeUser[0]['COUNT(id)'] > 0) {
+                        console.log("Es un cliente");
+                        rol = '0';
+                    }
+                    else {
+                        typeUser = await connection.query(`SELECT position FROM worker WHERE userId = ${userRaw[0].id}`);
+                        rol = typeUser[0]['position'];
+                    }
+
+                    console.log(rol);
+                    console.log("Entro al sistema: " + email);
+
+                    //Generar el token
+                    const jwtToken = jwt.sign(
+                        {
+                            id: userRaw[0].id,
+                            email: userRaw[0].email,
+                        },
+                        "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
+                    );
+
+                    res.json({ message: "Bienvenido!", token: jwtToken, action: "success", rol: rol });
+                } else {
+                    console.log("Usuario desactivado: " + email);
+                res.json({ message: "El usuario ha sido desactivado", action: "disabled" });
+                    // console.log("Passwords no coinciden: " + email);
+                    // res.json({ message: "Usuario o contraseña incorrectos", action: "error" });
                 }
-                else{
-                    typeUser = await connection.query(`SELECT position FROM worker WHERE userId = ${userRaw[0].id}`);
-                    rol = typeUser[0]['position'];
-                }
-
-                console.log(rol);
-                console.log("Entro al sistema: " + email);
-
-                //Generar el token
-                const jwtToken = jwt.sign(
-                    {
-                        id: userRaw[0].id,
-                        email: userRaw[0].email,
-                    },
-                    "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
-                );
-
-                res.json({ message: "Bienvenido!", token: jwtToken, action: "success", rol: rol });
             } else {
+                // console.log("Usuario desactivado: " + email);
+                // res.json({ message: "El usuario ha sido desactivado", action: "disabled" });
+                
                 console.log("Passwords no coinciden: " + email);
                 res.json({ message: "Usuario o contraseña incorrectos", action: "error" });
             }
+
         } else {
             console.log("Usuario NO encontrado " + email);
-            res.json({ message: "Usuario o contraseña incorrectos", action: "error" });
+            res.json({ message: "Usuario o contraseña incorrectos", action: "errorNoExiste" });
         }
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -134,11 +156,11 @@ export const recoverPassword = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
-    const { password,token } = req.body
+    const { password, token } = req.body
     try {
         const salt = await bcrypt.genSalt(10)
         const pass = await bcrypt.hash(password, salt)
-        
+
         const connection = await conectarDB();
 
         await connection.query(`UPDATE user SET password = '${pass}' WHERE token = '${token}';`);

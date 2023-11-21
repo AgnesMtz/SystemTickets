@@ -34,6 +34,7 @@ import {
           // console.log(data)                   
           setWorkers(data[0])  
           setSubscriptions(data[1])
+          
         } catch (error) {
           console.log(error.msg)
         }

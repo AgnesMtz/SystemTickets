@@ -38,6 +38,93 @@ const registrarUsuario = async (req, res) => {
     }
 }
 
+// const editarUsuario = async (req, res) => {
+//   try {
+//     const { name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone } = req.body;
+
+//     // Validar los datos del cliente antes de usarlos en la consulta
+//     // if (!name || !apPaterno || !apMaterno || !email || !dateJoined || !phone || !birthDate || !emerPhone) {
+//     //   return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+//     // }
+
+//     // if (!/\S+@\S+\.\S+/i.test(email)) {
+//     //   return res.status(400).json({ message: 'El correo electrónico es inválido' });
+//     // }
+
+//     // Escapar y utilizar consultas parametrizadas para prevenir la inyección SQL
+//     const connection = await conectarDB();
+//     const userInfo = await connection.query('SELECT * FROM user WHERE email = ?', [email]);
+//     const userId = userInfo[0].id;
+
+//     // Realizar la actualización sin almacenar el resultado en una variable
+//     await connection.query(`
+//       UPDATE worker
+//       INNER JOIN user ON worker.userId = user.id
+//       SET worker.name = ?, worker.firstLastName = ?, worker.secondLastName = ?,
+//           worker.phone = ?, worker.dateJoined = ?, worker.birthDate = ?,
+//           worker.emerPhone = ?, user.email = ?
+//       WHERE worker.id = ?
+//     `, [name, apPaterno, apMaterno, phone, dateJoined, birthDate, emerPhone, email, userId]);
+
+//     const trabajador = await connection.query(`
+//       SELECT * FROM worker 
+//       INNER JOIN user ON worker.userId = userId
+//       WHERE worker.id = ?
+//     `, [userId]);
+
+//     const trabajadorInfo = await connection.query('SELECT * FROM worker WHERE id = ?', [userId]);
+//     trabajador[0].trabajadorInfo = trabajadorInfo;
+
+//     res.json(trabajador);
+//   } catch (error) {
+//     console.error('Error en la edición de usuario:', error);
+//     return res.status(500).json({ message: 'Error al procesar la solicitud' });
+//   }
+// }
+
+
+const actualizarUsuario = async (req,res) =>{
+
+    //////Se esta trabakjando ene sto
+
+    ////////////
+    try {
+        ///se agarran los datos del form con el req.body
+        const {name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone} = req.body;
+
+        //Se crea la conexion a la base de datos
+        const connection = await conectarDB();
+        // Obtenemos los datos del trabajador
+        var userInfo = await connection.query(`SELECT * FROM user WHERE email = "${email}"`);
+        console.log("Info del usuario: ",userInfo);
+        var userId = userInfo[0].id;
+
+
+        // Actualizamos los datos dxel trabajador
+        var response = await connection.query(`UPDATE worker INNER JOIN user ON worker.userId = user.id SET worker.name = "${name}", worker.firstLastName = "${apPaterno}", worker.secondLastName = "${apMaterno}",
+        worker.phone = "${phone}", worker.dateJoined = "${dateJoined}", worker.birthDate = "${birthDate}", worker.emerPhone = "${emerPhone}", user.email = "${email}" WHERE worker.userId = ${userId}`);
+
+        // Retornamos los datos del trabajador actualizados
+         const trabajador = await connection.query(`
+         SELECT * FROM worker 
+                INNER JOIN user ON worker.userId = user.id
+                WHERE worker.userId = "${userId}";`)
+         const trabajadorInfo = await connection.query(`SELECT * FROM worker WHERE userId = "${userId}"`);
+         console.log("Variable de trabajadorInfo: ",trabajadorInfo);
+         trabajador[0].trabajadorInfo = trabajadorInfo;
+         res.json(trabajador);
+      //   console.log("Datos actualziados del trabajador");
+       //  console.log(trabajador);
+
+    } catch (error) {
+        console.log("Catch del controlador usuario");
+         console.log(error);
+         
+        return res.status(500).json({ message: error.message });
+    }
+
+}
+
 const mostrarWorkers = async (req, res) => {
 
     try {
@@ -223,6 +310,7 @@ const registrarBranch = async (req, res) => {
 
 export {
     registrarUsuario,
+    actualizarUsuario,
     mostrarWorkers,
     obtenerTrabajadores,
     obtenerUsuarios,
