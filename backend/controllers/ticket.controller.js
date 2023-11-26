@@ -432,5 +432,9 @@ export const subirComentarios = async (req, res) => {
         console.log(error);
         res.status(400).json({ msg: "Error #110: Algo salio mal al subir el comentario." });
     }
+<<<<<<< HEAD
 }
 
+=======
+};
+>>>>>>> 445a71a (ejemplo)
