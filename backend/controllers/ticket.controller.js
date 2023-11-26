@@ -647,10 +647,8 @@ export const subirComentarios = async (req, res) => {
 };
 
 
+export const ejemj1 = (var1) =>{
 
-
-
-
-export const ejemplo = (var1) =>{
-    console.log("ejemplo")
+    console.log('ejemplo1')
 }
+
