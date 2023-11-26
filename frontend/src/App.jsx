@@ -9,8 +9,8 @@ import { PerfilCliente, PerfilEmpleado } from "@/pages/profile/index.js";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [rol, setRol] = useState("");
-  const [id, setId] = useState("");
+  const [rol, setRol] = useState("rol");
+  const [id, setId] = useState("id");
 
   // useEffect(() => {
   //   console.log(rol);

@@ -245,60 +245,7 @@ export function Tickets() {
                 )}
               </CardBody>
             </Card>
-            <Card className="mt-4 flex min-w-[15rem] flex-col">
-              <CardHeader color="cyan" className=" flex justify-center p-5">
-                <Typography variant="h6" color="white" className="text-sm">
-                  Proceso
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-1 flex flex-col gap-2 p-1">
-                {tickets.map(
-                  (
-                    { id, activitie, petition, deadline, priority, state },
-                    key
-                  ) => {
-                    const classname = `min-w-[1rem] rounded text-center ${
-                      priority === 1
-                        ? "bg-deep-orange-600"
-                        : priority === 2
-                        ? "bg-orange-400"
-                        : priority === 3
-                        ? "bg-yellow-600"
-                        : "bg-blue-400"
-                    }`;
-                    if (state === 6) {
-                      return (
-                        <Card key={id}>
-                          <CardBody
-                            className="m-1 flex cursor-pointer flex-col bg-gray-50 p-1 hover:shadow-md"
-                            onClick={() => navigate(`/dashboard/ticket/${id}`)}
-                          >
-                            <Typography variant="small" color="black">
-                              {activitie}
-                            </Typography>
-                            <Typography variant="small" color="black">
-                              {petition}
-                            </Typography>
-                            <div className="flex justify-between">
-                              <Typography variant="small" color="black">
-                                {deadline.substring(0, 10)}
-                              </Typography>
-                              <Typography
-                                variant="small"
-                                color="white"
-                                className={classname}
-                              >
-                                {priority}
-                              </Typography>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      );
-                    }
-                  }
-                )}
-              </CardBody>
-            </Card>
+            
             <Card className="mt-4 flex min-w-[15rem] flex-col">
               <CardHeader color="lime" className=" flex justify-center p-5">
                 <Typography variant="h6" color="white" className="text-sm">

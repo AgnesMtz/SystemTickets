@@ -12,4 +12,6 @@ export const transporter = nodemailer.createTransport({
 
   transporter.verify().then(()=>{
     console.log("Listo para mandar correos");
+}).catch(error => {
+  console.log("Error al mandar correos, verifique la conexion a internet")
 })

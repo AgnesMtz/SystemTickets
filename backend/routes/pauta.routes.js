@@ -27,7 +27,16 @@ import {
     subirComentarios,
     cambiarEstadoAprobado,
     cambiarEstadoCancelado,
-    mostrarTicketsPorEncargado
+    mostrarTicketsPorEncargado,
+    cambiarEstadoPropuesta,
+    cambiarEstadoInformacion,
+    cambiarEstadoPausaPorCliente,
+    cambiarEstadoCanceloCliente,
+    cambiarEstadoPausaPorGS,
+    cambiarEstadoCorrecciones,
+    cambiarEstadoTerminado,
+    cambiarEstadoCanceladoPorPago,
+    cambiarEstadoRevisionPorDiseno,
 } from "../controllers/ticket.controller.js"
 
 import {
@@ -57,7 +66,17 @@ router.put('/subir-ticket/:ticketId', upload.single('ticket') , subirTicket)
 router.put('/editar-estado/:ticketId', cambiarEstado)
 router.put('/editar-estadoAprobado/:ticketId', cambiarEstadoAprobado)
 router.put('/editar-estadoCancelado/:ticketId', cambiarEstadoCancelado)
+router.put('/editar-estadoPropuesta/:ticketId', cambiarEstadoPropuesta)
+router.put('/editar-estadoRevisionPorDiseno/:ticketId', cambiarEstadoRevisionPorDiseno)
+router.put('/editar-estadoInformacion/:ticketId', cambiarEstadoInformacion)
+
 router.put('/subir-comentarios/:ticketId', subirComentarios)
+router.put('/editar-estadoPausaPorCliente/:ticketId', cambiarEstadoPausaPorCliente)
+router.put('/editar-estadoCanceloCliente/:ticketId', cambiarEstadoCanceloCliente)
+router.put('/editar-estadoPausaPorGS/:ticketId', cambiarEstadoPausaPorGS)
+router.put('/editar-estadoCorrecciones/:ticketId', cambiarEstadoCorrecciones)
+router.put('/editar-estadoTerminado/:ticketId', cambiarEstadoTerminado)
+router.put('/editar-estadoCanceladoPorPago/:ticketId', cambiarEstadoCanceladoPorPago)
 
 // Funciones Arturo
 router.put('/autorizar-pauta/', autorizarPauta)

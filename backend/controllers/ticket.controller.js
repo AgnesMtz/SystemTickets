@@ -386,17 +386,24 @@ export const cambiarEstado = async (req, res) => {
 
         const connection = await conectarDB();
 
-        var response = await connection.query(`UPDATE ticket SET ticket.state = ${stateId} WHERE ticket.id = ${ticketId}`);
+        // var response = await connection.query(`UPDATE ticket SET ticket.state = ${stateId} WHERE ticket.id = ${ticketId}`);
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [stateId, ticketId]);
 
         console.log(response);
         if (response.affectedRows === 0) {
-            res.status(400).json({ msg: "Error #114: El estado del ticket no pudo ser cambiado." });
+            // res.status(400).json({ msg: "Error #114: El estado del ticket no pudo ser cambiado." });
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        
         } else {
-            res.json({ msg: "El estado del ticket a sido cambiado satisfactoriamente." });
+            // res.json({ msg: "El estado del ticket a sido cambiado satisfactoriamente." });
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+       
         }
     } catch (error) {
         console.log(error);
-        res.status(400).json({ msg: "Error #110: Algo salio mal al cambiar el estado del ticket." });
+        // res.status(400).json({ msg: "Error #110: Algo salio mal al cambiar el estado del ticket." });
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    
     }
 }
 
@@ -406,19 +413,196 @@ export const cambiarEstadoAprobado = async (req, res) => {
 
         const connection = await conectarDB();
 
-        var response = await connection.query(`UPDATE ticket SET ticket.state = '4' WHERE ticket.id = ${ticketId}`);
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [4, ticketId]);
 
         console.log(response);
         if (response.affectedRows === 0) {
-            res.status(400).json({ msg: "Error #114: El estado del ticket no pudo ser cambiado." });
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
         } else {
-            res.json({ msg: "El estado del ticket a sido cambiado satisfactoriamente." });
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
         }
     } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error #110: Algo salio mal al cambiar el estado del ticket." });
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
     }
-}
+};
+
+
+// AQUI SE CAMBIA EL ESTADO DEL TICKET
+export const cambiarEstadoPropuesta = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [13, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoRevisionPorDiseno = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [3, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+
+export const cambiarEstadoInformacion = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [11, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+
+export const cambiarEstadoPausaPorCliente = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [7, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoCanceloCliente = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [14, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoPausaPorGS = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [15, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoCorrecciones = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [2, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoTerminado = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [5, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+export const cambiarEstadoCanceladoPorPago = async (req, res) => {
+    try {
+        const ticketId = req.params.ticketId;
+
+        const connection = await conectarDB();
+
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [12, ticketId]);
+
+        console.log(response);
+        if (response.affectedRows === 0) {
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
+        } else {
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
+    }
+};
+
 
 export const cambiarEstadoCancelado = async (req, res) => {
     try {
@@ -426,19 +610,20 @@ export const cambiarEstadoCancelado = async (req, res) => {
 
         const connection = await conectarDB();
 
-        var response = await connection.query(`UPDATE ticket SET ticket.state = '10' WHERE ticket.id = ${ticketId}`);
+        const response = await connection.query('UPDATE ticket SET state = ? WHERE id = ?', [10, ticketId]);
 
         console.log(response);
         if (response.affectedRows === 0) {
-            res.status(400).json({ msg: "Error #114: El estado del ticket no pudo ser cambiado." });
+            res.status(400).json({ msg: 'Error #114: El estado del ticket no pudo ser cambiado.' });
         } else {
-            res.json({ msg: "El estado del ticket a sido cambiado satisfactoriamente." });
+            res.json({ msg: 'El estado del ticket ha sido cambiado satisfactoriamente.' });
         }
     } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error #110: Algo salio mal al cambiar el estado del ticket." });
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al cambiar el estado del ticket.' });
     }
-}
+};
+
 
 export const subirComentarios = async (req, res) => {
     try {
@@ -447,17 +632,16 @@ export const subirComentarios = async (req, res) => {
 
         const connection = await conectarDB();
 
-        var response = await connection.query(`UPDATE ticket SET ticket.corrections = ${comentario} WHERE ticket.id = ${ticketId}`);
+        const response = await connection.query('UPDATE ticket SET corrections = ? WHERE id = ?', [comentario, ticketId]);
 
         console.log(response);
         if (response.affectedRows === 0) {
-            res.status(400).json({ msg: "Error #114: El comentario no pudo ser cargado." });
+            res.status(400).json({ msg: 'Error #114: El comentario no pudo ser cargado.' });
         } else {
-            res.json({ msg: "Comentarios subido exitosamente." });
+            res.json({ msg: 'Comentario subido exitosamente.' });
         }
     } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error #110: Algo salio mal al subir el comentario." });
+        console.error(error);
+        res.status(400).json({ msg: 'Error #110: Algo salió mal al subir el comentario.' });
     }
-}
-
+};
