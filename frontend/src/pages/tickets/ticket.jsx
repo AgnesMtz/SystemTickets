@@ -8,7 +8,7 @@ export function Ticket() {
   
   const context = useContext(MyContext);
   const rol = context.rol;
-  console.log('rol', rol)
+  console.log('rols', rol)
   return (
     <div className="mx-10 flex flex-wrap justify-center">
       <InformacionTicket rol={rol}/>
