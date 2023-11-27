@@ -557,7 +557,7 @@ export function FormInformacionTicket({ rol }) {
               {rol ===  '2' ? (
                 <CardFooter>
 
-
+{/* hola cara de vrga jajajajajjajajajjaja */}
 
                   <div className="flex flex-wrap justify-around">
 
