@@ -1,12 +1,14 @@
 import { chartsConfig } from "@/configs";
 
+
+
 const websiteViewsChart = {
   type: "bar",
   height: 220,
   series: [
     {
       name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
+      data: [50, 20, 10, 22, 40, 10, 40],
     },
   ],
   options: {
@@ -20,7 +22,7 @@ const websiteViewsChart = {
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["L", "M", "M", "J", "V", "S", "D"],
     },
   },
 };
@@ -76,9 +78,16 @@ const completedTasksChart = {
 export const statisticsChartsData = [
   {
     color: "blue",
-    title: "Tickets activos",
+    title: "Tickets ",
     description: "Cantidad de tickets activos por empresa",
-    // footer: "campaign sent 2 days ago",
+     footer: "campaign sent 2 days ago",
+    chart: websiteViewsChart,
+  },
+  {
+    color: "green",
+    title: "Tickets activos hoy",
+    description: "Cantidad de tickets terminados el dia de hoy",
+     footer: "campaign sent 2 days ago",
     chart: websiteViewsChart,
   },
   {
