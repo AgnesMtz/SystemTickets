@@ -7,6 +7,9 @@ import { conectarDB } from "./database/db.js";
 import indexRoutes from "./routes/index.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import usersRoutes from "./routes/users.routes.js";
+
+import estadisticasRoutes from "./routes/estadisticas.routes.js";
+
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import pautaRoutes from "./routes/pauta.routes.js";
 import branchOfficeRoutes from "./routes/branchOffice.routes.js";
@@ -49,6 +52,9 @@ app.use("/api/user", usersRoutes);
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/cliente", clienteRoutes);
 app.use("/api/ticket", pautaRoutes);
+//
+app.use("/api/estadisticas", estadisticasRoutes);
+///
 app.use("/api/branchOffice", branchOfficeRoutes);
 
 //Se crea la variable PORT para que sea usada en produccion, esa variable se crea automaticamente, en dado caso que estemos en local se asigna el puerto 4000

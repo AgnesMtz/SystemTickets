@@ -1,61 +1,44 @@
-import { conectarDB } from "../database/db.js";
+// En tu controlador (por ejemplo, controllers/graphController.js)
+import { conectarDB } from "../database/db.js"
 
-export const tickets = async (req, res) => {
-    try {
-        //Se obtiene el id del cliente
-        const { id } = req.params;
+const obtenerTicketsTerminadosHoy = async (req, res) => {
+  try {
+    const connection = await conectarDB();
+    const [existeTickets] = await connection.query(
+      `SELECT COUNT(*) AS num_tickets FROM ticket WHERE state = 5 AND DATE(applicationDate) = CURDATE();`
+    );
 
-        //Se crea la conexion a la base de datos
-        const connection = await conectarDB();
-
-        //Se ejecuta la consulta para obtener los datos del cliente
-        const response1 = await connection.query("SELECT * FROM Client WHERE id = ?", [id]);
-
-        if (response1.length === 0) {
-            res.status(400).json({ msg: "Error #454: El cliente no existe." });
-        } else {
-            const client = response1[0];
-
-            const response2 = await connection.query("SELECT * FROM BranchOffice WHERE clientId = ?", [id]);
-            client.branchOffices = response2;
-
-            const response3 = await connection.query("SELECT * FROM Contact WHERE clientId = ?", [id]);
-            client.contacts = response3;
-            res.json(client);
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error #460: Algo salio mal al obtener los clientes." });
+    if (existeTickets.usuario === 0) {
+      return res.status(404).json({ mensaje: 'No hay tickets terminados hoy' });
     }
+
+    return res.json({ num_tickets: existeTickets.num_tickets });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: 'Error en el servidor' });
+  }
 };
 
-export const crearContacto = async (req, res) => {
-    try {
-        //Se obtiene el id del cliente
-        const { clientId } = req.body;
 
-        //Se crea la conexion a la base de datos
-        const connection = await conectarDB();
+const obtenerTicketsTerminados = async (req, res) => {
+  try {
+    const connection = await conectarDB();
+    const [existeTickets] = await connection.query(
+      `SELECT COUNT(*) AS num_tickets FROM ticket WHERE state = 5 `
+    );
 
-        //Se ejecuta la consulta para obtener los datos del cliente
-        console.log(clientId);
-        const response1 = await connection.query("SELECT * FROM Client WHERE id = ?", [clientId]);
-        console.log(response1);
-
-        if (response1.length === 0) {
-            res.status(400).json({ msg: "Error #454: El cliente no existe." });
-        } else {
-            const { name, firstLastName, secondLastName, birthDate } = req.body;
-
-            const response2 = await connection.query(
-                "INSERT INTO Contact (name, firstLastName, secondLastName, birthDate, clientId, active) VALUES (?, ?, ?, ?, ?, 1)",
-                [name, firstLastName, secondLastName, birthDate, clientId]
-            );
-
-            res.json({ msg: "Contacto creado exitosamente." });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error #460: Algo salio mal al obtener los clientes." });
+    if (existeTickets.usuario === 0) {
+      return res.status(404).json({ mensaje: 'No hay tickets terminados ' });
     }
+
+    return res.json({ num_tickets: existeTickets.num_tickets });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: 'Error en el servidor' });
+  }
 };
+
+export {
+  obtenerTicketsTerminadosHoy,
+  obtenerTicketsTerminados
+}
