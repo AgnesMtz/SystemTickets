@@ -14,14 +14,26 @@ import { useSignIn, useIsAuthenticated } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export function SignIn({setRol}) {
+export function SignIn({ setRol }) {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  //alerta para usuario desactivado
+  const [visibleUser, setVisibleUser] = useState(false);
+  //alerta para usuario no encontrado
+  const [visibleUserExists, setVisibleUserExists] = useState(false);
   const isAuthenticated = useIsAuthenticated();
+  const userNotFound = false;
 
   const handleVisible = (visibility) => {
     setVisible(visibility);
+  };
+
+  const handleVisibleUser = (visibility) => {
+    setVisibleUser(visibility);
+  };
+  const handleVisibleUserExists = (visibility) => {
+    setVisibleUserExists(visibility);
   };
 
   useEffect(() => {
@@ -63,10 +75,24 @@ export function SignIn({setRol}) {
                 });
 
                 setRol(response.data.rol.toString());
-                
+
                 navigate("/dashboard/home");
               } else {
-                handleVisible(true);
+                console.log("Valor responde en el form: ", response.data.action);
+                // Modificar la condición para manejar "disabled"
+                if (response.data.action === "disabled") {
+                  console.log("Entre a disabled")
+                  handleVisible(true, "Usuario desactivado");
+                } else {
+                  if (response.data.action === "errorNoExiste") {
+                    console.log("Entre a errorNoexiste")
+                    handleVisibleUserExists(true, "Usuario no existente");
+                  } else {
+                    console.log("Me fui al else")
+                    handleVisibleUser(true, "Usuario o contraseña incorrectos");
+                  }
+
+                }
               }
             } catch (error) {
               console.log(error);
@@ -99,6 +125,35 @@ export function SignIn({setRol}) {
                       }}
                     >
                       Usuario o contraseña incorrectos
+                    </Alert>
+
+                  </CardHeader>
+                )}
+                {visibleUser && (
+                  <CardHeader className="top-5">
+                    <Alert
+                      color="red"
+                      dismissible={{
+                        onClose: () => {
+                          handleVisibleUser(false);
+                        },
+                      }}
+                    >
+                      Usuario desactivado
+                    </Alert>
+                  </CardHeader>
+                )}
+                {visibleUserExists && (
+                  <CardHeader className="top-5">
+                    <Alert
+                      color="red"
+                      dismissible={{
+                        onClose: () => {
+                          handleVisibleUser(false);
+                        },
+                      }}
+                    >
+                      Usuario no existente
                     </Alert>
                   </CardHeader>
                 )}
@@ -133,16 +188,16 @@ export function SignIn({setRol}) {
                     Iniciar Sesión
                   </Button>
                   <div className="flex justify-center items-center">
-                  <Button
-                    className="mt-2"
-                    variant="text"
-                    onClick={() => navigate("/recover_password/")}
-                  >
-                    ¿Has olvidado tu contraseña?
-                  </Button>
+                    <Button
+                      className="mt-2"
+                      variant="text"
+                      onClick={() => navigate("/recover_password/")}
+                    >
+                      ¿Has olvidado tu contraseña?
+                    </Button>
                   </div>
 
-                  
+
                 </CardFooter>
               </Card>
             </Form>

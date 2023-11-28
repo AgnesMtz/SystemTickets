@@ -21,7 +21,8 @@ import {
         
 
     const handleSubmit = async (values, {resetForm}) => {
-      console.log(values)
+      console.log("Valores del form que se enviaran: ",values)
+    //  console.log("Es parte del form  ")
       const {name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone} = values        
 
       if([name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone].includes('')){
@@ -32,7 +33,7 @@ import {
           return
       }
 
-      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      if (!/\S+@\S+\.\S+/i.test(email)) {
         setAlerta({
           msg: 'El correo electrónico es invalido.',
           error: true
@@ -58,14 +59,17 @@ import {
 
       setAlerta({})
       
+      
+
       try {          
           const {data} = await axios.post(
             //Declarar la variable VITE_BACKEND_URL en el .env del front de acuerdo a donde se ejecute la API
-            `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/registrar-usuario/`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/actualizar-usuario`,
             {name, apPaterno, apMaterno, email, dateJoined, phone, birthDate, emerPhone}
-          );  
-
-          // console.log(data)
+          );
+          
+          console.log("Datos que se envian a la ruta de editar usuario")
+          console.log(data)
         
           setAlerta({
             msg: data.msg,
@@ -73,14 +77,15 @@ import {
           });           
           
           resetForm()
-          handleGender('')
-          handlePosition('')
+//          handleGender('')
+ //         handlePosition('')
 
         } catch (error) {
-          console.log(error)
-          const {data} = error.response                        
+          console.log("Catch del form al no encontrar la ruta: " , error);
+          console.log(error);
+          //const {data} = error.response                        
           setAlerta({
-            msg: data.msg,
+            msg: 'Error al procesar la solicitud',
             error: true
           })
         }
@@ -163,6 +168,7 @@ import {
                     size="md"
                     variant="outlined"
                     disabled={!isEditing}
+//                    readOnly={!isEditing}
                     onChange={handleChange}
                   //   defaultValue={values.email}
                       defaultValue={values.email ?? usuario.email}

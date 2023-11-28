@@ -34,6 +34,7 @@ import {
           // console.log(data)                   
           setWorkers(data[0])  
           setSubscriptions(data[1])
+          
         } catch (error) {
           console.log(error.msg)
         }
@@ -241,7 +242,7 @@ import {
                   onClick={handleSubmit}
                   className="bg-teal-300"
                   >
-                  Registrar Trabajador
+                  Registrar Cliente
                 </Button>
               </CardFooter>
             </Card>

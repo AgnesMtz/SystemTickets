@@ -32,12 +32,24 @@ export function PerfilEmpleado() {
   //Activar o desactivar al empleado
   const handleActive = async () =>{
     try {
-      const {data} = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/${params.id}`,
-        {active}
-        );
-        setActive(!active)
-        // console.log(data)
+      const newActive = !active; // Nuevo valor a enviar a la base de datos
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_BACKEND_URL}/api/user/${params.id}`,
+      { active: newActive }
+    );
+
+    // Actualiza el estado solo si la solicitud fue exitosa
+    setActive((prevActive) => {
+      return newActive;
+    });
+      // const {data} = await axios.put(
+      //   `${import.meta.env.VITE_BACKEND_URL}/api/user/${params.id}`,
+      //   {active}
+      //   );
+      //   setActive(!active)
+      //   console.log(params.id)
+      //   console.log(active)
+      //  //  console.log(data)
       } catch (error) {
         console.log(error)
       }
@@ -52,9 +64,9 @@ export function PerfilEmpleado() {
               `${import.meta.env.VITE_BACKEND_URL}/api/user/${params.id}`
               );
             setUsuario(data[0]) 
-            // console.log(usuario)
-            setActive(usuario.active)         
-            // console.log(data)
+            console.log(usuario)
+            setActive(data[0].active);      
+             console.log(data)
           } catch (error) {
             console.log(error);
           }
@@ -104,7 +116,7 @@ export function PerfilEmpleado() {
                     Cuenta
                   </Typography>
                   <div className="flex flex-col gap-6">
-                    <Switch
+                    {/* <Switch
                       key="activo"
                       id="activo"
                       label="Activo"
@@ -113,7 +125,16 @@ export function PerfilEmpleado() {
                       labelProps={{
                         className: "text-sm font-normal text-blue-gray-500",
                       }}
-                    />                    
+                    />                     */}
+                    <Button
+                      key="activo"
+                      onClick={handleActive}
+                      color={active ? "blue" : "red"} // Cambiar el color del botón según el estado
+                      className="text-sm font-normal py-4 px-4 rounded"
+                      
+                    >
+                      {active ? "Activo" : "Inactivo"}
+                    </Button>
                   </div>
                 </div>
                 <div key="reportes">
