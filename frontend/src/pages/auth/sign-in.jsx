@@ -14,7 +14,7 @@ import { useSignIn, useIsAuthenticated } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export function SignIn({ setRol }) {
+export function SignIn({ setRol , setId}) {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
@@ -75,7 +75,7 @@ export function SignIn({ setRol }) {
                 });
 
                 setRol(response.data.rol.toString());
-
+                
                 navigate("/dashboard/home");
               } else {
                 console.log("Valor responde en el form: ", response.data.action);

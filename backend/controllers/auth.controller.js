@@ -60,14 +60,15 @@ export const login = async (req, res) => {
                     console.log(rol);
                     console.log("Entro al sistema: " + email);
 
-                    //Generar el token
-                    const jwtToken = jwt.sign(
-                        {
-                            id: userRaw[0].id,
-                            email: userRaw[0].email,
-                        },
-                        "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
-                    );
+                //Generar el token
+                const jwtToken = jwt.sign(
+                    {
+                        id: userRaw[0].id,
+                        email: userRaw[0].email,
+                    },
+                    process.env.JWT_SECRET
+                    // "FhightJPGalaxy" // Va a ser necesario cambiarlo por una variable de entorno
+                );
 
                     res.json({ message: "Bienvenido!", token: jwtToken, action: "success", rol: rol });
                 } else {

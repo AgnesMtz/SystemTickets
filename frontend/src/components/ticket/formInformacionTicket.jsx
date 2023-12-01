@@ -124,6 +124,148 @@ export function FormInformacionTicket({ rol }) {
     }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+  const handlePropuesta = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoPropuesta/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleRevisionPorDiseno = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoRevisionPorDiseno/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleInformacion = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoInformacion/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handlePausaPorCliente = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoPausaPorCliente/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCanceloCliente = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoCanceloCliente/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handlePausaPorGS = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoPausaPorGS/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCorrecciones = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoCorrecciones/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleTerminado = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoTerminado/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCanceladoPorPago = async () => {
+    try {
+      const ticketId = params.id;
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/ticket/editar-estadoCanceladoPorPago/${ticketId}`
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleCancel = async () => {
     try {
       const ticketId = params.id;
@@ -296,7 +438,9 @@ export function FormInformacionTicket({ rol }) {
                     )}
                   </div>
                   <div>
-                    <Typography variant="h6">Estado:</Typography>
+
+                    {/* PARA ESTADO DEL TICKET  */}
+                    <Typography variant="h6">Estado:</Typography> 
                     {editar ? (
                       <Select
                         variant="standard"
@@ -404,13 +548,21 @@ export function FormInformacionTicket({ rol }) {
                   className="rounded-md pt-0 text-lg"
                   variant="standard"
                   size="md"
-                  value={values.corrections ?? datos.corrections}
+                  value={rol.rol}
+                  // value={values.corrections ?? datos.corrections}
                   disabled={editar ? false : true}
                 />
               </CardBody>
-              {rol === '2'  && (
+  
+              {rol ===  '2' ? (
                 <CardFooter>
+
+{/* hola cara de vrga jajajajajjajajajjaja */}
+
                   <div className="flex flex-wrap justify-around">
+
+
+                    
                     {editar ? (
                       <Button
                         variant="outlined"
@@ -430,15 +582,122 @@ export function FormInformacionTicket({ rol }) {
                         <span>Aprobar</span>
                       </Button>
                     )}
+
+
+                  
+
+                    
+
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handlePropuesta}
+                        className="bg-teal-400"
+                      >
+                        <span>Propuesta</span>
+                      </Button>
+
+
+                      
+                        <list
+                        variant="outlined"
+                        color="white"
+                        onClick={handleInformacion}
+                        className="bg-teal-400"
+                      >
+                        <span>En espera de información</span>
+                      </list>
+
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handleRevisionPorDiseno}
+                        className="bg-teal-400"
+                      >
+                        <span>Revision por diseno</span>
+                      </Button>
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handlePausaPorCliente}
+                        className="bg-teal-400"
+                      >
+                        <span>Pausa por cliente</span>
+                      </Button>
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handleCorrecciones}
+                        className="bg-orange-500"
+                      >
+                        <span>Correcciones</span>
+                      </Button>
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handleCanceladoPorPago}
+                        className="bg-red-800"
+                      >
+                        <span>Cancelado por pago</span>
+                      </Button>
+                      
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handleCanceloCliente}
+                        className="bg-red-400"
+                      >
+                        <span>Cancelo cliente</span>
+                      </Button>
+
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handlePausaPorGS}
+                        className="bg-teal-400"
+                      >
+                        <span>Pausa por GS</span>
+                      </Button>
+                      
+                      <Button
+                        variant="outlined"
+                        color="white"
+                        onClick={handleTerminado}
+                        className="bg-green-400"
+                      >
+                        <span>Terminado</span>
+                      </Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     {editar ? (
                       <Button
                         variant="outlined"
                         color="white"
-                        onClick={(e) => handleEditar(!editar)}
+                        onClick={(e) => handleCancel(!editar)}
                         className="bg-red-300"
                       >
                         <span>Cancelar</span>
                       </Button>
+
+                      
                     ) : (
                       <Fragment>
                         <Button
@@ -461,7 +720,7 @@ export function FormInformacionTicket({ rol }) {
                     )}
                   </div>
                 </CardFooter>
-              )}
+              ) : ""}
             </Form>
           </>
         )}

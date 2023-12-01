@@ -9,7 +9,8 @@ import { PerfilCliente, PerfilEmpleado } from "@/pages/profile/index.js";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [rol, setRol] = useState("");
+  const [rol, setRol] = useState("rol");
+  const [id, setId] = useState("id");
 
   // useEffect(() => {
   //   console.log(rol);
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<SignIn setRol={setRol} />} /> //Login
+      <Route path="/" element={<SignIn setRol={setRol} setId={setId} />} /> //Login
       <Route path="/recover_password/" element={<RecoverPassword />} /> //Send
       email
       <Route path="/recover_password/:token" element={<ResetPassword />} />{" "}
@@ -27,7 +28,7 @@ function App() {
         path="/dashboard/*"
         element={
           <RequireAuth loginPath="/">            
-              <Dashboard rol={rol} />
+              <Dashboard rol={rol} id={id} />
           </RequireAuth>
         }
       />

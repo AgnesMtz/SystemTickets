@@ -7,11 +7,11 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController } from "@/context";
-import { createContext } from "react";
 
+import { createContext } from "react";
 export const MyContext = createContext();
 
-export function Dashboard({ rol }) {
+export function Dashboard({ rol , id}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -27,7 +27,7 @@ export function Dashboard({ rol }) {
       <div className="p-4 xl:ml-80">
         <DashboardNavbar />
         <Configurator />
-        <MyContext.Provider value={rol}>
+        <MyContext.Provider value={{rol, id}}>
           <Routes>
             {routes.map(({ layout, pages }) =>
               // layout === "dashboard" &&

@@ -17,15 +17,30 @@ export function Tickets() {
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
   const rol = useContext(MyContext);
+  const id = useContext(MyContext);
 
   useEffect(() => {
     const getTickets = async () => {
       try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
-        );
-        setTickets(data[0]);
-        console.log(data);
+
+        if(rol.rol === "3"){
+          // SI EL ROL ES UN Operador Creativo TRAE LOS TICKETS ASIGNADOS A ESE OPERADOR
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets-encargado/${id.id}`
+            // `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
+
+          );
+          setTickets(data[0]);
+          
+
+        }else{
+          // SI EL ROL ES DIFERENTE DE 3 TRAE TODOS LOS TICKETS 
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/ticket/mostrar-tickets/`
+          );
+          setTickets(data[0]);
+          
+        }
       } catch (error) {
         console.log(error);
       }
@@ -230,60 +245,7 @@ export function Tickets() {
                 )}
               </CardBody>
             </Card>
-            <Card className="mt-4 flex min-w-[15rem] flex-col">
-              <CardHeader color="cyan" className=" flex justify-center p-5">
-                <Typography variant="h6" color="white" className="text-sm">
-                  Proceso
-                </Typography>
-              </CardHeader>
-              <CardBody className="m-1 flex flex-col gap-2 p-1">
-                {tickets.map(
-                  (
-                    { id, activitie, petition, deadline, priority, state },
-                    key
-                  ) => {
-                    const classname = `min-w-[1rem] rounded text-center ${
-                      priority === 1
-                        ? "bg-deep-orange-600"
-                        : priority === 2
-                        ? "bg-orange-400"
-                        : priority === 3
-                        ? "bg-yellow-600"
-                        : "bg-blue-400"
-                    }`;
-                    if (state === 6) {
-                      return (
-                        <Card key={id}>
-                          <CardBody
-                            className="m-1 flex cursor-pointer flex-col bg-gray-50 p-1 hover:shadow-md"
-                            onClick={() => navigate(`/dashboard/ticket/${id}`)}
-                          >
-                            <Typography variant="small" color="black">
-                              {activitie}
-                            </Typography>
-                            <Typography variant="small" color="black">
-                              {petition}
-                            </Typography>
-                            <div className="flex justify-between">
-                              <Typography variant="small" color="black">
-                                {deadline.substring(0, 10)}
-                              </Typography>
-                              <Typography
-                                variant="small"
-                                color="white"
-                                className={classname}
-                              >
-                                {priority}
-                              </Typography>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      );
-                    }
-                  }
-                )}
-              </CardBody>
-            </Card>
+            
             <Card className="mt-4 flex min-w-[15rem] flex-col">
               <CardHeader color="lime" className=" flex justify-center p-5">
                 <Typography variant="h6" color="white" className="text-sm">
