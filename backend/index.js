@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 
 import estadisticasRoutes from "./routes/estadisticas.routes.js";
+import pruebaRoutes from "./routes/prueba.routes.js";
 
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import pautaRoutes from "./routes/pauta.routes.js";
@@ -54,6 +55,7 @@ app.use("/api/cliente", clienteRoutes);
 app.use("/api/ticket", pautaRoutes);
 //
 app.use("/api/estadisticas", estadisticasRoutes);
+app.use("/api/prueba", pruebaRoutes);
 ///
 app.use("/api/branchOffice", branchOfficeRoutes);
 
