@@ -11,6 +11,7 @@ import { Home, Profile, Tables, Notifications, Registro, Tickets} from "@/pages/
 import {PerfilCliente, PerfilEmpleado} from "@/pages/profile"
 import { RegistroPauta } from "@/pages/guidelines";
 import { Ticket } from "@/pages/tickets";
+// import { Notifications } from "@/pages/dashboard";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -52,6 +53,7 @@ export const routes = [ //Aqui se definen las rutas
       //   name: "Notificaciones",
       //   path: "/notifactions",
       //   element: <Notifications />,
+      //   permission: ['1','2','3']
       // },
       {
         icon: <TicketIcon {...icon} />,

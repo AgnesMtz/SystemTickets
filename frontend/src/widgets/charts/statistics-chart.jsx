@@ -111,7 +111,7 @@ export function StatisticsChart({ color, chart, title, description, footer }) {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/estadisticas/obtener-ticketsTerminados/`
       );
-        console.log(data)
+       // console.log(data)
       // Actualiza el estado con los datos obtenidos del backend
       setNumTicketsTerminados(data.num_tickets);
 
@@ -158,12 +158,7 @@ export function StatisticsChart({ color, chart, title, description, footer }) {
           {footer}
         </CardFooter>
       )}
-      {numTicketsTerminados !== null && (
-        <div>
-          <p>Número de tickets terminados hoy: {numTicketsTerminados}</p>
-          {/* Aquí puedes usar numTicketsTerminados en tus gráficas */}
-        </div>
-      )}
+     
     </Card>
   );
 }
