@@ -600,14 +600,14 @@ export function FormInformacionTicket({ rol }) {
 
 
                       
-                        <list
+                        <Button
                         variant="outlined"
                         color="white"
                         onClick={handleInformacion}
                         className="bg-teal-400"
                       >
                         <span>En espera de información</span>
-                      </list>
+                      </Button>
 
 
                       <Button
@@ -632,7 +632,7 @@ export function FormInformacionTicket({ rol }) {
                         variant="outlined"
                         color="white"
                         onClick={handleCorrecciones}
-                        className="bg-orange-500"
+                        className="bg-teal-400"
                       >
                         <span>Correcciones</span>
                       </Button>
@@ -641,7 +641,7 @@ export function FormInformacionTicket({ rol }) {
                         variant="outlined"
                         color="white"
                         onClick={handleCanceladoPorPago}
-                        className="bg-red-800"
+                        className="bg-teal-400"
                       >
                         <span>Cancelado por pago</span>
                       </Button>
@@ -650,7 +650,7 @@ export function FormInformacionTicket({ rol }) {
                         variant="outlined"
                         color="white"
                         onClick={handleCanceloCliente}
-                        className="bg-red-400"
+                        className="bg-teal-400"
                       >
                         <span>Cancelo cliente</span>
                       </Button>
@@ -668,7 +668,7 @@ export function FormInformacionTicket({ rol }) {
                         variant="outlined"
                         color="white"
                         onClick={handleTerminado}
-                        className="bg-green-400"
+                        className="bg-teal-400"
                       >
                         <span>Terminado</span>
                       </Button>
@@ -704,7 +704,7 @@ export function FormInformacionTicket({ rol }) {
                           variant="outlined"
                           color="white"
                           onClick={(e) => handleEditar(!editar)}
-                          className="bg-orange-300"
+                         className="bg-teal-400"
                         >
                           <span>Editar</span>
                         </Button>
@@ -712,7 +712,7 @@ export function FormInformacionTicket({ rol }) {
                           variant="outlined"
                           color="white"
                           onClick={handleCancel}
-                          className="bg-red-300"
+                          className="bg-teal-400"
                         >
                           <span>Rechazar</span>
                         </Button>
